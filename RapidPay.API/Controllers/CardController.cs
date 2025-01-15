@@ -5,13 +5,20 @@ using RapidPay.Services.Interfaces;
 
 namespace RapidPay.API.Controllers
 {
+    /// <summary>
+    /// Controller for managing card operations.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
-    public class CardsController : ControllerBase
+    public class CardController : ControllerBase
     {
         private readonly ICardService _cardService;
 
-        public CardsController(ICardService cardService)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CardController"/> class.
+        /// </summary>
+        /// <param name="cardService">The card service.</param>
+        public CardController(ICardService cardService)
         {
             _cardService = cardService;
         }
@@ -65,21 +72,21 @@ namespace RapidPay.API.Controllers
         /// <returns>Result of the operation.</returns>
         /// <response code="200">If the payment is successful</response>
         /// <response code="400">If an error occurs during the payment</response>
-        //[HttpPost("{id}/pay")]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(400)]
-        //public async Task<IActionResult> Pay(int id, [FromBody] decimal amount)
-        //{
-        //    try
-        //    {
-        //        await _cardService.MakePaymentAsync(id, amount);
-        //        return Ok(new { Message = "Payment successful" });
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        return BadRequest(new { Message = ex.Message }); // Returns 400 Bad Request if an exception occurs
-        //    }
-        //}
+        [HttpPost("{id}/pay")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Pay(int id, [FromBody] decimal amount)
+        {
+            try
+            {
+                await _cardService.MakePaymentAsync(id, amount);
+                return Ok(new { Message = "Payment successful" });
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message }); // Returns 400 Bad Request if an exception occurs
+            }
+        }
 
         /// <summary>
         /// Gets the balance of a card by its ID.

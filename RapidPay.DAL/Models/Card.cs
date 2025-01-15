@@ -37,5 +37,10 @@ namespace RapidPay.DAL.Models
             Number = number;
             Balance = balance;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Card"/> class.
+        /// </summary>
+        public Card() { }
     }
 }
