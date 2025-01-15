@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace RapidPay.DAL.Models
 {
     /// <summary>
     /// Represents a transaction associated with a card.
     /// </summary>
+    [PrimaryKey(nameof(Id))]
     public class Transaction
     {
         /// <summary>

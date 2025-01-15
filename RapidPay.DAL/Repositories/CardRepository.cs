@@ -1,5 +1,7 @@
 ﻿using RapidPay.DAL.Models;
 using RapidPay.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using RapidPay.DAL.Data;
 
 namespace RapidPay.DAL.Repositories
 {
@@ -8,7 +10,14 @@ namespace RapidPay.DAL.Repositories
     /// </summary>
     public class CardRepository : ICardRepository
     {
-        private readonly List<Card> _cards = new();
+        private readonly ApplicationDbContext _context;
+        private readonly DbSet<Card> _cards;
+
+        public CardRepository(ApplicationDbContext context)
+        {
+            _context = context;
+            _cards = _context.Set<Card>();
+        }
 
         /// <summary>
         /// Creates a new card asynchronously.
@@ -17,8 +26,9 @@ namespace RapidPay.DAL.Repositories
         /// <returns>The created card.</returns>
         public async Task<Card> CreateCardAsync(Card card)
         {
-            _cards.Add(card);
-            return await Task.FromResult(card);
+            await _cards.AddAsync(card);
+            await _context.SaveChangesAsync();
+            return card;
         }
 
         /// <summary>
@@ -28,8 +38,17 @@ namespace RapidPay.DAL.Repositories
         /// <returns>The card with the specified number.</returns>
         public async Task<Card?> GetCardAsync(string cardNumber)
         {
-            var card = _cards.FirstOrDefault(c => c.Number == cardNumber);
-            return await Task.FromResult(card);
+            return await _cards.FirstOrDefaultAsync(c => c.Number == cardNumber);
+        }
+
+        /// <summary>
+        /// Retrieves a card by its identifier asynchronously.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<Card?> GetCardByIdAsync(int id)
+        {
+            return await _cards.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         /// <summary>
@@ -39,15 +58,16 @@ namespace RapidPay.DAL.Repositories
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task<bool> UpdateCardAsync(Card card)
         {
-            var existingCard = _cards.FirstOrDefault(c => c.Id == card.Id);
+            var existingCard = await _cards.FirstOrDefaultAsync(c => c.Id == card.Id);
             if (existingCard == null)
             {
-                return await Task.FromResult(false);
-            }
+                return false;
+            } 
 
             existingCard.Number = card.Number;
             existingCard.Balance = card.Balance;
-            return await Task.FromResult(true);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

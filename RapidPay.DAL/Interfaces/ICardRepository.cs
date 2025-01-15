@@ -28,5 +28,12 @@ namespace RapidPay.DAL.Interfaces
         /// <param name="card">The card to update.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task<bool> UpdateCardAsync(Card card);
+
+        /// <summary>
+        /// Retrieves a card by its identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The card Id</param>
+        /// <returns></returns>
+        Task<Card?> GetCardByIdAsync(int id);
     }
 }

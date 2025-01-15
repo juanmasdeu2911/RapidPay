@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace RapidPay.DAL.Models
 {
     /// <summary>
     /// Represents a payment card with a unique identifier, number, and balance.
     /// </summary>
+    [PrimaryKey(nameof(Id))]
     public class Card
     {
         /// <summary>

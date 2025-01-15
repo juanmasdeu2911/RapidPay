@@ -11,13 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidPay.DAL", "RapidPay.DA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidPay.Tests", "RapidPay.Tests\RapidPay.Tests.csproj", "{FF6E8CA6-A693-4D09-A738-78FCE00B4F3F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{193802E0-54D5-470F-BA0F-F63B145EE1FC}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\CreateCardNumbers.sql = Scripts\CreateCardNumbers.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{650F21C4-B590-4AF9-B28C-480DC9BADC01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,5 +38,8 @@ Global
 		{FF6E8CA6-A693-4D09-A738-78FCE00B4F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF6E8CA6-A693-4D09-A738-78FCE00B4F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF6E8CA6-A693-4D09-A738-78FCE00B4F3F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
