@@ -39,6 +39,9 @@ Once the project is running, you can access the Swagger UI at `https://localhost
 If you encounter the `System.InvalidOperationException` related to path base configuration, ensure that the path base is set correctly using `IApplicationBuilder.UsePathBase()`
 before calling `app.Run()`.
 
+## Next Improvements
+Add Unit test module to ensure services and repository layers are working as expected.
+
 ## Contributing
 Feel free to fork the repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
 
