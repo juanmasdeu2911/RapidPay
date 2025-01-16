@@ -1,6 +1,7 @@
 ﻿using RapidPay.DAL.Interfaces;
 using RapidPay.DAL.Models;
 using RapidPay.Services.Interfaces;
+using RapidPay.Services.Payment;
 
 namespace RapidPay.Services.Services
 {
@@ -27,7 +28,7 @@ namespace RapidPay.Services.Services
 
         public async Task<Card?> MakePaymentAsync(int id, decimal amount)
         {
-            if (amount < 0)
+            if (amount <= 0)
             {
                 throw new ApplicationException("Amount greater than zero");
             }
@@ -38,15 +39,18 @@ namespace RapidPay.Services.Services
                 throw new ApplicationException($"Card id {id} not found");
             }
 
-            if (card.Balance < amount)
+            var fee = UniversalFeesExchange.Instance.GetCurrentFee();
+            var totalAmount = amount * fee;
+
+            if (card.Balance < totalAmount)
             {
                 throw new ApplicationException("Insufficient funds");
             }
 
-            card.Balance -= amount;
+            card.Balance -= totalAmount;
             await _cardRepository.UpdateCardAsync(card);
 
-            var transaction = new Transaction(card.Id, amount, DateTime.UtcNow);
+            var transaction = new Transaction(card.Id, totalAmount, DateTime.UtcNow);
             await _transactionRepository.AddTransactionAsync(transaction);
             return card;
         }
