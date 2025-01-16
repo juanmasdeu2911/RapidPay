@@ -19,6 +19,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06D9816E-0A6F-40F6-9CCD-6E81ED7C6BAF}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		UATP_RapidPay_CodeTest.pdf = UATP_RapidPay_CodeTest.pdf
 	EndProjectSection
 EndProject
 Global
