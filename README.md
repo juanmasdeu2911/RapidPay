@@ -34,7 +34,7 @@ Ensure that the `appsettings.json` file is properly configured with your setting
 
 ### Usage
 Once the project is running, you can access the Swagger UI at `https://localhost:5001/swagger` to explore and test the API endpoints.
-To get a authorization token, use admin/admin as user/password. Given this is a prototype, user and password are hardcoded just to 
+To get a authorization token, use `admin` as user/password in the body request. Given this is a prototype, user and password are hardcoded just to 
 show JWT implementation.
 
 ## Troubleshooting
