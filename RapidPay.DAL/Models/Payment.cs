@@ -7,7 +7,7 @@ namespace RapidPay.DAL.Models
     /// Represents a transaction associated with a card.
     /// </summary>
     [PrimaryKey(nameof(Id))]
-    public class Transaction
+    public class Payment
     {
         /// <summary>
         /// Gets the unique identifier for the transaction.
@@ -33,12 +33,12 @@ namespace RapidPay.DAL.Models
         public DateTime Date { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Transaction"/> class.
+        /// Initializes a new instance of the <see cref="Payment"/> class.
         /// </summary>
         /// <param name="cardId">The identifier of the associated card.</param>
         /// <param name="amount">The amount of the transaction.</param>
         /// <param name="date">The date of the transaction.</param>
-        public Transaction(int cardId, decimal amount, DateTime date)
+        public Payment(int cardId, decimal amount, DateTime date)
         {
             CardId = cardId;
             Amount = amount;

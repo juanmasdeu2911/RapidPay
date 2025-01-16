@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RapidPay.DAL.Models;
 using RapidPay.Services.Interfaces;
@@ -10,6 +11,7 @@ namespace RapidPay.API.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CardController : ControllerBase
     {
         private readonly ICardService _cardService;
@@ -80,7 +82,7 @@ namespace RapidPay.API.Controllers
             try
             {
                 await _cardService.MakePaymentAsync(id, amount);
-                return Ok(new { Message = "Payment successful" });
+                return Ok(new { Message = "Fees successful" });
             }
             catch (System.Exception ex)
             {

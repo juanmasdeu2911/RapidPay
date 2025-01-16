@@ -69,7 +69,7 @@ namespace RapidPay.DAL.Migrations
 
                     b.HasIndex("CardId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("RapidPay.DAL.Models.Transaction", b =>

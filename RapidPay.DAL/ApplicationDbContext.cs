@@ -20,9 +20,9 @@ namespace RapidPay.DAL.Data
         public DbSet<Card> Cards { get; set; }
 
         /// <summary>
-        /// Gets or sets the DbSet of transactions.
+        /// Gets or sets the DbSet of payments.
         /// </summary>
-        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,8 +42,8 @@ namespace RapidPay.DAL.Data
                       .HasPrecision(18, 2);
             });
 
-            // Configure Transaction entity
-            modelBuilder.Entity<Transaction>(entity =>
+            // Configure Payment entity
+            modelBuilder.Entity<Payment>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.CardId)

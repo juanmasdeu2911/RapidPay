@@ -26,9 +26,21 @@ namespace RapidPay.DAL.Repositories
         /// <returns>The created card.</returns>
         public async Task<Card> CreateCardAsync(Card card)
         {
-            await _cards.AddAsync(card);
-            await _context.SaveChangesAsync();
-            return card;
+            using (var tran = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    await _cards.AddAsync(card);
+                    await _context.SaveChangesAsync();
+                    await tran.CommitAsync();
+                    return card;
+                }
+                catch
+                {
+                    await tran.RollbackAsync();
+                    throw;
+                }
+            }
         }
 
         /// <summary>
@@ -58,16 +70,28 @@ namespace RapidPay.DAL.Repositories
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task<bool> UpdateCardAsync(Card card)
         {
-            var existingCard = await _cards.FirstOrDefaultAsync(c => c.Id == card.Id);
-            if (existingCard == null)
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                return false;
-            }
+                try
+                {
+                    var existingCard = await _cards.FirstOrDefaultAsync(c => c.Id == card.Id);
+                    if (existingCard == null)
+                    {
+                        return false;
+                    }
 
-            existingCard.Number = card.Number;
-            existingCard.Balance = card.Balance;
-            await _context.SaveChangesAsync();
-            return true;
+                    existingCard.Number = card.Number;
+                    existingCard.Balance = card.Balance;
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    return true;
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
         }
     }
 }

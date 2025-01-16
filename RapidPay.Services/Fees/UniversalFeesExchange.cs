@@ -1,4 +1,4 @@
-﻿namespace RapidPay.Services.Payment
+﻿namespace RapidPay.Services.Fees
 {
     public class UniversalFeesExchange
     {

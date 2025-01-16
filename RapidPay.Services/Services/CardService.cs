@@ -1,19 +1,19 @@
 ﻿using RapidPay.DAL.Interfaces;
 using RapidPay.DAL.Models;
+using RapidPay.Services.Fees;
 using RapidPay.Services.Interfaces;
-using RapidPay.Services.Payment;
 
 namespace RapidPay.Services.Services
 {
     public class CardService : ICardService
     {
         public ICardRepository _cardRepository { get; set; }
-        public ITransactionRepository _transactionRepository { get; set; }
+        public IPaymentRepository _paymentRepository { get; set; }
 
-        public CardService(ICardRepository cardRepository, ITransactionRepository transactionRepository)
+        public CardService(ICardRepository cardRepository, IPaymentRepository transactionRepository)
         {
             _cardRepository = cardRepository;
-            _transactionRepository = transactionRepository;
+            _paymentRepository = transactionRepository;
         }
 
         public async Task<Card?> GetCardByIdAsync(int id)
@@ -30,13 +30,13 @@ namespace RapidPay.Services.Services
         {
             if (amount <= 0)
             {
-                throw new ApplicationException("Amount greater than zero");
+                throw new ArgumentException("Amount must be greater than zero", nameof(amount));
             }
 
             var card = await _cardRepository.GetCardByIdAsync(id);
             if (card == null)
             {
-                throw new ApplicationException($"Card id {id} not found");
+                throw new KeyNotFoundException($"Card id {id} not found");
             }
 
             var fee = UniversalFeesExchange.Instance.GetCurrentFee();
@@ -44,14 +44,15 @@ namespace RapidPay.Services.Services
 
             if (card.Balance < totalAmount)
             {
-                throw new ApplicationException("Insufficient funds");
+                throw new InvalidOperationException("Insufficient funds");
             }
 
             card.Balance -= totalAmount;
             await _cardRepository.UpdateCardAsync(card);
 
-            var transaction = new Transaction(card.Id, totalAmount, DateTime.UtcNow);
-            await _transactionRepository.AddTransactionAsync(transaction);
+            var transaction = new Payment(card.Id, totalAmount, DateTime.UtcNow);
+            await _paymentRepository.AddPaymentAsync(transaction);
+
             return card;
         }
 

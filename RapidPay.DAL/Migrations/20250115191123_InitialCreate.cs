@@ -25,7 +25,7 @@ namespace RapidPay.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transactions",
+                name: "Payments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -47,7 +47,7 @@ namespace RapidPay.DAL.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_CardId",
-                table: "Transactions",
+                table: "Payments",
                 column: "CardId");
         }
 
@@ -55,7 +55,7 @@ namespace RapidPay.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Cards");
