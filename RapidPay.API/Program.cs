@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "RapidPay API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "RapidPay API - POC", Version = "v1" });
 
     // Add JWT Authentication to Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -95,6 +95,9 @@ app.UseHttpsRedirection(); // Redirect to HTTPS
 
 app.UseAuthentication(); // Add authentication middleware
 app.UseAuthorization(); // Authorization middleware
+
+// Configure path base if needed
+app.UsePathBase("/swagger");
 
 app.MapControllers(); // Map API controllers
 
