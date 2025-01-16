@@ -3,10 +3,6 @@ using Moq;
 using RapidPay.DAL.Data;
 using RapidPay.DAL.Models;
 using RapidPay.DAL.Repositories;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace RapidPay.Tests.Repositories
 {
@@ -44,35 +40,35 @@ namespace RapidPay.Tests.Repositories
 
         [Fact]
         public async Task GetCardAsync_ShouldReturnCard_WhenCardExists()
-        {           
-                // Arrange
-                var cardId = 1;
-                var card = new Card("123456789012345", 1000);
-                typeof(Card).GetProperty("Id")?.SetValue(card, cardId);
-                var data = new List<Card> { card }.AsQueryable();
+        {
+            // Arrange
+            var cardId = 1;
+            var card = new Card("123456789012345", 1000);
+            typeof(Card).GetProperty("Id")?.SetValue(card, cardId);
+            var data = new List<Card> { card }.AsQueryable();
 
-                var mockAsyncEnumerable = new Mock<IAsyncEnumerable<Card>>();
-                var mockAsyncEnumerator = new Mock<IAsyncEnumerator<Card>>();
+            var mockAsyncEnumerable = new Mock<IAsyncEnumerable<Card>>();
+            var mockAsyncEnumerator = new Mock<IAsyncEnumerator<Card>>();
 
-                mockAsyncEnumerator.Setup(m => m.Current).Returns(data.First());
-                mockAsyncEnumerator.SetupSequence(m => m.MoveNextAsync())
-                                   .ReturnsAsync(true)
-                                   .ReturnsAsync(false);
-                mockAsyncEnumerator.Setup(m => m.DisposeAsync()).Returns(ValueTask.CompletedTask);
+            mockAsyncEnumerator.Setup(m => m.Current).Returns(data.First());
+            mockAsyncEnumerator.SetupSequence(m => m.MoveNextAsync())
+                               .ReturnsAsync(true)
+                               .ReturnsAsync(false);
+            mockAsyncEnumerator.Setup(m => m.DisposeAsync()).Returns(ValueTask.CompletedTask);
 
-                mockAsyncEnumerable.Setup(m => m.GetAsyncEnumerator(default)).Returns(mockAsyncEnumerator.Object);
+            mockAsyncEnumerable.Setup(m => m.GetAsyncEnumerator(default)).Returns(mockAsyncEnumerator.Object);
 
-                _mockDbSet.As<IQueryable<Card>>().Setup(m => m.Provider).Returns(data.Provider);
-                _mockDbSet.As<IQueryable<Card>>().Setup(m => m.Expression).Returns(data.Expression);
-                _mockDbSet.As<IQueryable<Card>>().Setup(m => m.ElementType).Returns(data.ElementType);
-                _mockDbSet.As<IQueryable<Card>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
-                _mockDbSet.As<IAsyncEnumerable<Card>>().Setup(m => m.GetAsyncEnumerator(default)).Returns(mockAsyncEnumerator.Object);
+            _mockDbSet.As<IQueryable<Card>>().Setup(m => m.Provider).Returns(data.Provider);
+            _mockDbSet.As<IQueryable<Card>>().Setup(m => m.Expression).Returns(data.Expression);
+            _mockDbSet.As<IQueryable<Card>>().Setup(m => m.ElementType).Returns(data.ElementType);
+            _mockDbSet.As<IQueryable<Card>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            _mockDbSet.As<IAsyncEnumerable<Card>>().Setup(m => m.GetAsyncEnumerator(default)).Returns(mockAsyncEnumerator.Object);
 
-                // Act
-                var result = await _repository.GetCardByIdAsync(cardId);
+            // Act
+            var result = await _repository.GetCardByIdAsync(cardId);
 
-                // Assert
-                Assert.Equal(card, result);      
+            // Assert
+            Assert.Equal(card, result);
 
 
         }

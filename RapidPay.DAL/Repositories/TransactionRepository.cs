@@ -11,7 +11,7 @@ namespace RapidPay.DAL.Repositories
         private readonly ApplicationDbContext _context;
         private readonly DbSet<Transaction> _transactions;
 
-        public TransactionRepository(ApplicationDbContext context) 
+        public TransactionRepository(ApplicationDbContext context)
         {
             _context = context;
             _transactions = _context.Set<Transaction>();
@@ -23,11 +23,11 @@ namespace RapidPay.DAL.Repositories
             await _context.SaveChangesAsync();
             return transaction;
         }
-       
+
         public async Task<IList<Transaction>> GetTransactionsByCardId(int cardId)
         {
             return await _transactions.Where(x => x.CardId == cardId).ToListAsync();
         }
-      
+
     }
 }

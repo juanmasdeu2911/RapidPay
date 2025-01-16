@@ -39,7 +39,7 @@ namespace RapidPay.DAL.Data
                       .HasMaxLength(15);
                 entity.Property(e => e.Balance)
                       .IsRequired()
-                      .HasPrecision(18, 2); 
+                      .HasPrecision(18, 2);
             });
 
             // Configure Transaction entity
@@ -50,7 +50,7 @@ namespace RapidPay.DAL.Data
                       .IsRequired();
                 entity.Property(e => e.Amount)
                       .IsRequired()
-                      .HasPrecision(18, 2); 
+                      .HasPrecision(18, 2);
                 entity.Property(e => e.Date)
                       .IsRequired();
                 entity.HasOne<Card>()

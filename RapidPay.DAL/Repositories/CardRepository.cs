@@ -1,7 +1,7 @@
-﻿using RapidPay.DAL.Models;
-using RapidPay.DAL.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RapidPay.DAL.Data;
+using RapidPay.DAL.Interfaces;
+using RapidPay.DAL.Models;
 
 namespace RapidPay.DAL.Repositories
 {
@@ -62,7 +62,7 @@ namespace RapidPay.DAL.Repositories
             if (existingCard == null)
             {
                 return false;
-            } 
+            }
 
             existingCard.Number = card.Number;
             existingCard.Balance = card.Balance;
