@@ -29,8 +29,8 @@ Ensure that the `appsettings.json` file is properly configured with your setting
 
 ### Database Setup
 1. Configure the database settings in the `appsettings.json` file.
-2. Use the SQL script included in the solution to create the necessary database tables for storing card information.
-3. Update the database by running the following command in the Package Manager Console:
+2. Update the database by running the following command `Update-database` in the Package Manager Console
+3. Use the SQL script `CreateCardNumbers.sql` included in the solution to create the necessary database tables for storing card information.
 
 ### Usage
 Once the project is running, you can access the Swagger UI at `https://localhost:5001/swagger` to explore and test the API endpoints.
