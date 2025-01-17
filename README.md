@@ -12,7 +12,7 @@ RapidPay is a payment processing API developed as part of a distillery code chal
 - **Authentication and Authorization**: Secures the API endpoints.
 
 ## Prerequisites
-- .NET 9 SDK
+- .NET 8 SDK
 - SQL Server Express
 - Visual Studio 2022
 
