@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RapidPay.DAL.Data;
 
@@ -11,16 +12,15 @@ using RapidPay.DAL.Data;
 namespace RapidPay.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250117161135_CardPaymentsRelationship")]
+    partial class CardPaymentsRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.1")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -62,6 +62,9 @@ namespace RapidPay.DAL.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CardId1")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -69,16 +72,22 @@ namespace RapidPay.DAL.Migrations
 
                     b.HasIndex("CardId");
 
+                    b.HasIndex("CardId1");
+
                     b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("RapidPay.DAL.Models.Payment", b =>
                 {
                     b.HasOne("RapidPay.DAL.Models.Card", null)
-                        .WithMany("Payments")
+                        .WithMany()
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("RapidPay.DAL.Models.Card", null)
+                        .WithMany("Payments")
+                        .HasForeignKey("CardId1");
                 });
 
             modelBuilder.Entity("RapidPay.DAL.Models.Card", b =>
