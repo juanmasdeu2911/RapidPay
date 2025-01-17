@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RapidPay.DAL.Models;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace RapidPay.DAL.Data
 {
