@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RapidPay.DAL.Models;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace RapidPay.DAL.Data
 {
@@ -24,6 +25,10 @@ namespace RapidPay.DAL.Data
         /// </summary>
         public DbSet<Payment> Payments { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
