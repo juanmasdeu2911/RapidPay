@@ -112,5 +112,28 @@ namespace RapidPay.API.Controllers
                 return BadRequest(new { Message = ex.Message }); // Returns 400 Bad Request if an exception occurs
             }
         }
+
+        /// <summary>
+        /// Gets the balance of a card by its ID.
+        /// </summary>
+        /// <param name="id">ID of the card.</param>
+        /// <returns>Current balance of the card.</returns>
+        /// <response code="200">Returns the current balance of the card</response>
+        /// <response code="400">If an error occurs while retrieving the balance</response>
+        [HttpGet("{id}/payments")]
+        [ProducesResponseType(typeof(IList<Payment>), 200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetCardPayments(int id)
+        {
+            try
+            {
+                var payments = await _cardService.GetPaymentListAsync(id);
+                return Ok(payments);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message }); // Returns 400 Bad Request if an exception occurs
+            }
+        }
     }
 }

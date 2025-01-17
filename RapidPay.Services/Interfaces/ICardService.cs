@@ -10,5 +10,6 @@ namespace RapidPay.Services.Interfaces
         Task<Card?> MakePaymentAsync(int id, decimal amount);
         Task<decimal> GetBalanceAsync(int id);
         Task<Card?> GetCardByIdAsync(int id);
+        Task<IList<Payment>> GetPaymentListAsync(int id);
     }
 }
