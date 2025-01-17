@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore RapidPay.API/RapidPay.API.csproj
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Build 
+      run: dotnet build  RapidPay.API/RapidPay.API.csproj --no-restore
+    - name: Test 
+      run: dotnet test RapidPay.API/RapidPay.API.csproj --no-build --verbosity normal
