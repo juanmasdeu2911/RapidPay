@@ -35,7 +35,6 @@ namespace RapidPay.DAL.Data
             base.OnModelCreating(modelBuilder);
 
             // Configure Card entity
-            // The Card entity has a primary key, a card number, and a balance.
             modelBuilder.Entity<Card>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -45,6 +44,10 @@ namespace RapidPay.DAL.Data
                 entity.Property(e => e.Balance)
                       .IsRequired()
                       .HasPrecision(18, 2);
+                entity.HasMany(e => e.Payments)
+                      .WithOne()
+                      .HasForeignKey(p => p.CardId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Configure Payment entity
@@ -58,10 +61,6 @@ namespace RapidPay.DAL.Data
                       .HasPrecision(18, 2);
                 entity.Property(e => e.Date)
                       .IsRequired();
-                entity.HasOne<Card>()
-                      .WithMany()
-                      .HasForeignKey(e => e.CardId)
-                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

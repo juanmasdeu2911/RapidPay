@@ -39,6 +39,12 @@ namespace RapidPay.DAL.Models
         }
 
         /// <summary>
+        /// Gets or sets the collection of payments associated with the card.
+        /// This property is virtual to support lazy loading.
+        /// </summary>
+        public virtual IList<Payment> Payments { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Card"/> class.
         /// </summary>
         public Card() { }
