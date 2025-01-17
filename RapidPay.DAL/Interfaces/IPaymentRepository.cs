@@ -5,6 +5,6 @@ namespace RapidPay.DAL.Interfaces
     public interface IPaymentRepository
     {
         Task<Payment?> AddPaymentAsync(Payment transaction);
-        Task<IList<Payment>> GetPaymentsByCardId(int cardId);
+        Task<IList<Payment>> GetPaymentsByCardIdAsync(int cardId);
     }
 }

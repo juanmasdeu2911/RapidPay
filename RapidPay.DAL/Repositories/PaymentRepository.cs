@@ -36,7 +36,7 @@ namespace RapidPay.DAL.Repositories
             }
         }
 
-        public async Task<IList<Payment>> GetPaymentsByCardId(int cardId)
+        public async Task<IList<Payment>> GetPaymentsByCardIdAsync(int cardId)
         {
             return await _transactions.Where(x => x.CardId == cardId).ToListAsync();
         }

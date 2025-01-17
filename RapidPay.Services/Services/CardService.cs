@@ -66,9 +66,14 @@ namespace RapidPay.Services.Services
             return card.Balance;
         }
 
-        public Task<Card> GetCardAsync(int id)
+        public async Task<Card> GetCardAsync(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IList<Payment>> GetPaymentListAsync(int id)
+        {
+            return await _paymentRepository.GetPaymentsByCardIdAsync(id);
         }
     }
 }
