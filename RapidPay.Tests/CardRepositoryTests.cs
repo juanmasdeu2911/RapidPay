@@ -1,37 +1,16 @@
-using Microsoft.EntityFrameworkCore;
-using RapidPay.DAL.Data;
+using RapidPay.DAL.Interfaces;
 using RapidPay.DAL.Models;
 using RapidPay.DAL.Repositories;
 
 namespace RapidPay.Tests.Repositories
 {
-    public class CardRepositoryTests
+    public class CardRepositoryTests : RepositoryTests
     {
-        private readonly ApplicationDbContext _context;
-        private readonly CardRepository _repository;
+        private readonly ICardRepository _repository;
 
-        public CardRepositoryTests()
+        public CardRepositoryTests() : base()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                              .UseSqlServer("Server=.\\rapidpayexpress;Database=RapidPayTest;User ID=sa;Password=admin1234;Encrypt=True;TrustServerCertificate=True")
-                              .Options;
-
-            _context = new ApplicationDbContext(options);
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
-
-            SeedDatabase();
-
             _repository = new CardRepository(_context);
-
-        }
-
-        private void SeedDatabase()
-        {
-            _context.Cards.Add(new Card("3456789012345", 25000));
-            _context.Cards.Add(new Card("32109876543210", 50000));
-            _context.SaveChanges();
-
         }
 
         [Fact]
@@ -51,7 +30,7 @@ namespace RapidPay.Tests.Repositories
         [Fact]
         public async Task GetCardAsync_ShouldReturnCard_WhenCardExists()
         {
-           
+
             var result = await _repository.GetCardAsync("3456789012345");
 
             //Assert
@@ -90,7 +69,7 @@ namespace RapidPay.Tests.Repositories
 
             // Act
             var existingCard = await _repository.GetCardByIdAsync(3);
-                        
+
             //Assert
             Assert.Null(existingCard);
         }
