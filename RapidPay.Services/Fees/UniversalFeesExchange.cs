@@ -1,28 +1,45 @@
-﻿namespace RapidPay.Services.Fees
+﻿using RapidPay.Services.Interfaces;
+
+namespace RapidPay.Services.Fees
 {
-    public class UniversalFeesExchange
+    public class UniversalFeesExchangeService : IUniversalFeesExchangeService
     {
-        private static readonly Lazy<UniversalFeesExchange> _instance = new Lazy<UniversalFeesExchange>(() => new UniversalFeesExchange());
         private decimal _currentFee = 1.0m;
         private readonly Random _random = new Random();
+        private static readonly object _lock = new object();
+        private readonly Func<Task> _delayFunction;
 
-        private UniversalFeesExchange()
+        public UniversalFeesExchangeService() : this(new Random(), () => Task.Delay(TimeSpan.FromHours(1)))
         {
+        }
+
+        public UniversalFeesExchangeService(Random random, Func<Task> delayFunction)
+        {
+            _random = random;
+            _delayFunction = delayFunction;
             Task.Run(UpdateFee);
         }
 
-        public static UniversalFeesExchange Instance => _instance.Value;
+        public UniversalFeesExchangeService(int seed, Func<Task> delayFunction) : this(new Random(seed), delayFunction)
+        {
+        }
 
-        public decimal GetCurrentFee() => _currentFee;
+
+        public decimal GetCurrentFee()
+        {
+            lock (_lock)
+            {
+                return _currentFee;
+            }
+        }
 
         private async Task UpdateFee()
         {
             while (true)
             {
-                await Task.Delay(TimeSpan.FromHours(1));
+                await _delayFunction();
                 _currentFee *= (decimal)(_random.NextDouble() * 2);
             }
         }
     }
-
 }

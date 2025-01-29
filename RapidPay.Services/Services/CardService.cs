@@ -1,6 +1,5 @@
 ﻿using RapidPay.DAL.Interfaces;
 using RapidPay.DAL.Models;
-using RapidPay.Services.Fees;
 using RapidPay.Services.Interfaces;
 
 namespace RapidPay.Services.Services
@@ -9,11 +8,13 @@ namespace RapidPay.Services.Services
     {
         public ICardRepository _cardRepository { get; set; }
         public IPaymentRepository _paymentRepository { get; set; }
+        public IUniversalFeesExchangeService _universalFeesExchange { get; set; }
 
-        public CardService(ICardRepository cardRepository, IPaymentRepository transactionRepository)
+        public CardService(ICardRepository cardRepository, IPaymentRepository transactionRepository, IUniversalFeesExchangeService universalFeesExchange)
         {
             _cardRepository = cardRepository;
             _paymentRepository = transactionRepository;
+            _universalFeesExchange = universalFeesExchange;
         }
 
         public async Task<Card?> GetCardByIdAsync(int id)
@@ -39,7 +40,7 @@ namespace RapidPay.Services.Services
                 throw new KeyNotFoundException($"Card id {id} not found");
             }
 
-            var fee = UniversalFeesExchange.Instance.GetCurrentFee();
+            var fee = _universalFeesExchange.GetCurrentFee();
             var totalAmount = amount * fee;
 
             if (card.Balance < totalAmount)

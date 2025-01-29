@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using RapidPay.DAL.Data;
 using RapidPay.DAL.Interfaces;
 using RapidPay.DAL.Repositories;
+using RapidPay.Services.Fees;
 using RapidPay.Services.Interfaces;
 using RapidPay.Services.Services;
 using System.Text;
@@ -58,6 +59,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddSingleton<IUniversalFeesExchangeService, UniversalFeesExchangeService>();
 
 // Add JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");

@@ -3,7 +3,7 @@ using RapidPay.DAL.Interfaces;
 using RapidPay.DAL.Models;
 using RapidPay.DAL.Repositories;
 
-namespace RapidPay.Tests
+namespace RapidPay.Tests.Repositories
 {
 
     public class PaymentRepositoryTests : RepositoryTests
